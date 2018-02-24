@@ -1,0 +1,627 @@
+= BPMN Modeler - ASCIIDocter
+John Schuster <John.Schuster@PhoenixWorkgroup.com>
+V2.1b,02/23/2018:GeekMustHave 
+:Author: John HR Schuster
+:Company: Phoenix Workgroup LLC
+:toc: left
+:toclevels: 4:
+:imagesdir: ./images
+:pagenums:
+:experimental:
+:source-hightlighter: pygments
+:icons: font
+:linkattrs:
+:docdir: */documents
+:docURL: https://pwc-paas.com/BRAT/CC360-MCIR
+:tags: icon:tags[role='blue']
+:checked: icon:check-square[role='green']
+:warning: icon:warning[role='yellow']
+:down: icon:thumbs-o-down[role='red']
+:up: icon:thumbs-o-up[role='green']
+:bookmark: icon:bookmark[role='blue']
+:research: icon:university[role='purple']
+
+This is a project to create a version of the BPMN modeler that 
+will work with generating an ASCIIDoctor documentation markdown documnet.
+
+== Introduction
+
+The BPMN modeler provide a quick way to draw up business process models diagrams.
+
+The BPMN format is an XML format will defined in the BPMN 2.0 specification document.
+
+The BPMN format can be exported to a SVG formatted file making it very usable for web usage.
+
+== Goals
+
+BPMN files can have additional properties added to them to allow for customization and extension.
+
+1. Add additional properties (Title, Order, Image) to allow for automated documentation generation.
+
+2. Allow for the addition of a SVG `Title` property that will display a toooltip 
+when hovering over an element of the SVG version of the BPMN diagram.
+
+3. Allow for the addition of a event listener in the SVG file that would pop-up a named image file when the element was clicked on.
+
+== Research
+
+The additional properties that can be added to a BPMN diagram do not automatically show up in the exported SVG.
+
+There doesn't appear to be any defined method of cre4ating a property for an element that will trender as the SVG Title.
+
+The focus of this project must be based on the BPMN file and not the SVG file.
+
+== Tool Chain
+
+There are a number of tools required to build this project.
+
+=== Node and NPM
+
+Node and NPM must be installed and/or updated as the base of the development code.
+
+Verify both are installed and the versions.
+
+.Version information
+----
+PS F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc> node --version
+v8.9.4 <1>
+PS F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc> NPM --version
+5.6.0 <2>
+----
+<1> As of 02/23/2018
+<2> As of 02/23/2018
+
+== GRUNT and browserfy
+
+Grunt is a task runner. for managing the development workflow for developing this application.
+
+In one word: automation. 
+The less work you have to do when performing repetitive tasks like minification, 
+compilation, unit testing, linting, etc, the easier your job becomes. 
+
+After you've configured it through a Gruntfile, 
+a task runner can do most of that mundane work for you—and your team—with basically zero effort.
+
+Before setting up Grunt ensure that your npm is up-to-date by running `npm update -g npm`
+(this might require sudo on certain systems).
+
+.Install Grunt CLI 
+
+In order to get started, you'll want to install Grunt's command line interface (CLI) globally.
+
+  npm install -g grunt-cli 
+
+.Grunt install result
+----
+C:\Users\jschust2\AppData\Roaming\npm\grunt -> C:\Users\jschust2\AppData\Roaming\npm\node_modules\grunt-cli\bin\grunt
++ grunt-cli@1.2.0
+added 16 packages in 1.619s
+----
+
+Note that installing grunt-cli does not install the Grunt task runner! 
+
+
+== BPMN Modeler code
+
+This example uses bpmn-js to implement a modeler for BPMN 2.0 process diagrams. 
+It serves as the basis of the bpmn-js demo application available at demo.bpmn.io.
+
+https://github.com/bpmn-io/bpmn-js-examples/tree/master/modeler[BPMN Modeler GitHub Page]
+
+When the code is downloaded and expanded it will have the following files
+
+* Gruintfile.js - needed for building the app 
+* package.json - App dependancies
+
+.Install dependancies
+
+Install project dependencies with 
+
+    npm install
+
+.Install results
+
+----
+npm WARN deprecated http2@3.3.7: Use the built-in module in node 9.0.0 or newer, instead
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+added 433 packages in 23.675s
+----
+
+There will be a new directory <<node_modules>> with all the dependancies.
+
+
+.Development - Production
+
+The development directory is `app`.
+
+The production or distribution foldr is `dist`.
+
+
+.Run Grunt
+
+Grunt will assemble the project and run the tasks needed to compile it.
+
+  grunt -force
+
+.Grunt results
+
+----
+(node:15656) ExperimentalWarning: The http2 module is an experimental API.
+Running "jshint:src" (jshint) task
+
+   app\index.js
+      1 |'use strict';
+         ^ Use the function form of "use strict".
+      3 |var fs = require('fs');
+                  ^ 'require' is not defined.
+      5 |var $ = require('jquery'),
+                 ^ 'require' is not defined.
+      6 |    BpmnModeler = require('bpmn-js/lib/Modeler');
+                           ^ 'require' is not defined.
+    132 |  var _ = require('lodash');
+                   ^ 'require' is not defined.
+     14 |var newDiagramXML = fs.readFileSync(__dirname + '/../resources/newDiagram.bpmn', 'utf-8');
+                                             ^ '__dirname' is not defined.
+     31 |      console.error(err);
+               ^ 'console' is not defined.
+     63 |    var reader = new FileReader();
+                              ^ 'FileReader' is not defined.
+     90 |if (!window.FileList || !window.FileReader) {
+              ^ 'window' is not defined.
+     90 |if (!window.FileList || !window.FileReader) {
+                                  ^ 'window' is not defined.
+     91 |  window.alert(
+           ^ 'window' is not defined.
+
+>> 11 errors in 1 file
+Warning: Task "jshint:src" failed. Used --force, continuing.
+
+Running "copy:diagram_js" (copy) task
+Copied 1 file
+
+Running "copy:bpmn_js" (copy) task
+
+
+Running "copy:app" (copy) task
+Copied 2 files
+
+Running "browserify:app" (browserify) task
+>> Bundle dist/index.js created.
+
+Done, but with warnings.
+----  
+
+== GIT Repository
+
+The code will be version controlled using GIT.  
+A copy of the local repository will be synced with the github repository.
+
+  https://github.com/geekmusthave/BPMN-Modeler-ASCIIDocter
+
+
+Visual Studio Code has a good extension to help manage the GIT repository.  
+GIT commands can also be entered via the terminal window.
+
+
+.Initilize the local GIT repository
+
+  git init 
+
+.Initilize GIT results
+
+----
+PS F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc> git init
+Initialized empty Git repository in F:/users/jschust2/Dropbox/myDev/BPMN-modeler-asciidoc/.git/
+----  
+
+.gitignore
+
+There are quite a few folders and files we do not need in the GIT repository.
+
+The `.gitignore` file has a list of those items to be ignored.
+
+.gitignore contents
+
+----
+node_modules/
+dist/
+tmp/
+Master-Examples/ <1>
+----
+<1> Area where I put a copy of all the BPMN-JS examples for reference.
+
+
+== References
+
+[[node_modules]]
+=== node_modules
+
+.node_modules
+The `node_modules` folder contains the following dependancies.
+
+----
+F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc\node_modules
+├── @browserify
+├── abbrev
+├── accepts
+├── acorn
+├── acorn-node
+├── ansi-regex
+├── ansi-styles
+├── anymatch
+├── argparse
+├── arr-diff
+├── arr-flatten
+├── array-differ
+├── array-filter
+├── array-find-index
+├── array-map
+├── array-reduce
+├── array-union
+├── array-uniq
+├── array-unique
+├── arrify
+├── asn1.js
+├── assert
+├── astw
+├── async
+├── async-each
+├── balanced-match
+├── base64-js
+├── basic-auth
+├── batch
+├── binary-extensions
+├── bn.js
+├── body-parser
+├── bpmn-font
+├── bpmn-js
+├── bpmn-moddle
+├── brace-expansion
+├── braces
+├── brfs
+├── brorand
+├── browser-pack
+├── browser-resolve
+├── browserify
+├── browserify-aes
+├── browserify-cache-api
+├── browserify-cipher
+├── browserify-des
+├── browserify-incremental
+├── browserify-rsa
+├── browserify-sign
+├── browserify-zlib
+├── buffer
+├── buffer-equal
+├── buffer-xor
+├── builtin-modules
+├── builtin-status-codes
+├── bytes
+├── cached-path-relative
+├── camelcase
+├── camelcase-keys
+├── chalk
+├── chokidar
+├── cipher-base
+├── cli
+├── closest
+├── coffeescript
+├── colors
+├── combine-source-map
+├── component-event
+├── concat-map
+├── concat-stream
+├── connect
+├── connect-livereload
+├── console-browserify
+├── constants-browserify
+├── content-type
+├── convert-source-map
+├── core-util-is
+├── create-ecdh
+├── create-hash
+├── create-hmac
+├── crypto-browserify
+├── currently-unhandled
+├── date-now
+├── dateformat
+├── debug
+├── decamelize
+├── deep-is
+├── defined
+├── delegate-events
+├── depd
+├── deps-sort
+├── des.js
+├── destroy
+├── detective
+├── diagram-js
+├── diagram-js-direct-editing
+├── didi
+├── diffie-hellman
+├── dom-serializer
+├── domain-browser
+├── domelementtype
+├── domhandler
+├── domify
+├── domutils
+├── duplexer2
+├── ee-first
+├── elliptic
+├── encodeurl
+├── entities
+├── error-ex
+├── escape-html
+├── escape-string-regexp
+├── escodegen
+├── esprima
+├── estraverse
+├── esutils
+├── etag
+├── eventemitter2
+├── events
+├── evp_bytestokey
+├── exit
+├── expand-brackets
+├── expand-range
+├── extglob
+├── falafel
+├── fast-levenshtein
+├── faye-websocket
+├── file-sync-cmp
+├── filename-regex
+├── fill-range
+├── finalhandler
+├── find-up
+├── findup-sync
+├── for-in
+├── for-own
+├── foreach
+├── fresh
+├── fs.realpath
+├── function-bind
+├── gaze
+├── get-stdin
+├── getobject
+├── glob
+├── glob-base
+├── glob-parent
+├── globule
+├── graceful-fs
+├── grunt
+├── grunt-browserify
+├── grunt-contrib-connect
+├── grunt-contrib-copy
+├── grunt-contrib-jshint
+├── grunt-contrib-watch
+├── grunt-known-options
+├── grunt-legacy-log
+├── grunt-legacy-log-utils
+├── grunt-legacy-util
+├── hammerjs
+├── has
+├── has-ansi
+├── hash-base
+├── hash.js
+├── hat
+├── hmac-drbg
+├── hooker
+├── hosted-git-info
+├── htmlescape
+├── htmlparser2
+├── http-errors
+├── http-parser-js
+├── http2
+├── https-browserify
+├── iconv-lite
+├── ids
+├── ieee754
+├── indent-string
+├── indexof
+├── inflight
+├── inherits
+├── inline-source-map
+├── insert-module-globals
+├── is-arrayish
+├── is-binary-path
+├── is-buffer
+├── is-builtin-module
+├── is-dotfile
+├── is-equal-shallow
+├── is-extendable
+├── is-extglob
+├── is-finite
+├── is-glob
+├── is-number
+├── is-posix-bracket
+├── is-primitive
+├── is-utf8
+├── isarray
+├── isexe
+├── isobject
+├── jquery
+├── js-yaml
+├── jshint
+├── json-stable-stringify
+├── jsonify
+├── jsonparse
+├── JSONStream
+├── kind-of
+├── labeled-stream-splicer
+├── levn
+├── lexical-scope
+├── livereload-js
+├── load-grunt-tasks
+├── load-json-file
+├── lodash
+├── lodash.memoize
+├── loud-rejection
+├── map-obj
+├── matches-selector
+├── md5.js
+├── media-typer
+├── meow
+├── micromatch
+├── miller-rabin
+├── mime
+├── mime-db
+├── mime-types
+├── min-dom
+├── minimalistic-assert
+├── minimalistic-crypto-utils
+├── minimatch
+├── minimist
+├── mkdirp
+├── moddle
+├── moddle-xml
+├── module-deps
+├── morgan
+├── ms
+├── multimatch
+├── negotiator
+├── nopt
+├── normalize-package-data
+├── normalize-path
+├── number-is-nan
+├── object-assign
+├── object-inspect
+├── object-keys
+├── object-refs
+├── object.omit
+├── on-finished
+├── on-headers
+├── once
+├── opn
+├── optionator
+├── os-browserify
+├── outpipe
+├── pako
+├── parents
+├── parse-asn1
+├── parse-glob
+├── parse-json
+├── parseurl
+├── path-browserify
+├── path-exists
+├── path-intersection
+├── path-is-absolute
+├── path-parse
+├── path-platform
+├── path-type
+├── pbkdf2
+├── pify
+├── pinkie
+├── pinkie-promise
+├── pkg-up
+├── portscanner
+├── prelude-ls
+├── preserve
+├── process
+├── process-nextick-args
+├── public-encrypt
+├── punycode
+├── qs
+├── querystring
+├── querystring-es3
+├── quote-stream
+├── randomatic
+├── randombytes
+├── randomfill
+├── range-parser
+├── raw-body
+├── read-only-stream
+├── read-pkg
+├── read-pkg-up
+├── readable-stream
+├── readdirp
+├── redent
+├── regex-cache
+├── remove-trailing-separator
+├── repeat-element
+├── repeat-string
+├── repeating
+├── resolve
+├── resolve-from
+├── resolve-pkg
+├── rimraf
+├── ripemd160
+├── safe-buffer
+├── saxen
+├── semver
+├── send
+├── serve-index
+├── serve-static
+├── set-immediate-shim
+├── setprototypeof
+├── sha.js
+├── shallow-copy
+├── shasum
+├── shell-quote
+├── shelljs
+├── signal-exit
+├── source-map
+├── spdx-correct
+├── spdx-expression-parse
+├── spdx-license-ids
+├── sprintf-js
+├── static-eval
+├── static-module
+├── statuses
+├── stream-browserify
+├── stream-combiner2
+├── stream-http
+├── stream-splicer
+├── string_decoder
+├── strip-ansi
+├── strip-bom
+├── strip-indent
+├── strip-json-comments
+├── subarg
+├── supports-color
+├── syntax-error
+├── through
+├── through2
+├── timers-browserify
+├── tiny-lr
+├── tiny-stack
+├── tiny-svg
+├── to-arraybuffer
+├── trim-newlines
+├── tty-browserify
+├── type-check
+├── type-is
+├── typedarray
+├── umd
+├── underscore.string
+├── unpipe
+├── url
+├── util
+├── util-deprecate
+├── utils-merge
+├── validate-npm-package-license
+├── vm-browserify
+├── watchify
+├── websocket-driver
+├── websocket-extensions
+├── which
+├── wordwrap
+├── wrappy
+└── xtend
+
+directory: 366
+----
+
+
+
+
+== Document History
+
+.Document History
+[options="header"]
+|===
+|  Date  | Version | Author | Description
+| 02/23/2019 | v2.1b | JHRS | Initial version of the document.
+|===

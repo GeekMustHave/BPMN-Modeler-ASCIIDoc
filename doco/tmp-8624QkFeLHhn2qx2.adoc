@@ -1,0 +1,132 @@
+= BPMN Modeler - ASCIIDocter
+John Schuster <John.Schuster@PhoenixWorkgroup.com>
+V2.1b,02/23/2018:GeekMustHave 
+:Author: John HR Schuster
+:Company: Phoenix Workgroup LLC
+:toc: left
+:toclevels: 4:
+:imagesdir: ./images
+:pagenums:
+:experimental:
+:source-hightlighter: pygments
+:icons: font
+:linkattrs:
+:docdir: */documents
+:docURL: https://pwc-paas.com/BRAT/CC360-MCIR
+:tags: icon:tags[role='blue']
+:checked: icon:check-square[role='green']
+:warning: icon:warning[role='yellow']
+:down: icon:thumbs-o-down[role='red']
+:up: icon:thumbs-o-up[role='green']
+:bookmark: icon:bookmark[role='blue']
+:research: icon:university[role='purple']
+
+This is a project to create a version of the BPMN modeler that 
+will work with generating an ASCIIDoctor documentation markdown documnet.
+
+== Introduction
+
+The BPMN modeler provide a quick way to draw up business process models diagrams.
+
+The BPMN format is an XML format will defined in the BPMN 2.0 specification document.
+
+The BPMN format can be exported to a SVG formatted file making it very usable for web usage.
+
+== Goals
+
+BPMN files can have additional properties added to them to allow for customization and extension.
+
+1. Add additional properties (Title, Order, Image) to allow for automated documentation generation.
+
+2. Allow for the addition of a SVG `Title` property that will display a toooltip 
+when hovering over an element of the SVG version of the BPMN diagram.
+
+3. Allow for the addition of a event listener in the SVG file that would pop-up a named image file when the element was clicked on.
+
+== Research
+
+The additional properties that can be added to a BPMN diagram do not automatically show up in the exported SVG.
+
+There doesn't appear to be any defined method of cre4ating a property for an element that will trender as the SVG Title.
+
+The focus of this project must be based on the BPMN file and not the SVG file.
+
+== Tool Chain
+
+There are a number of tools required to build this project.
+
+=== Node and NPM
+
+Node and NPM must be installed and/or updated as the base of the development code.
+
+.Version information
+----
+PS F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc> node --version
+v8.9.4 <1>
+PS F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc> NPM --version
+5.6.0 <2>
+----
+<1> As of 02/23/2018
+<2> As of 02/23/2018
+
+== GRUNT and browserfy
+
+Grunt is a task runner. for managing the development workflow for developing this application.
+
+In one word: automation. 
+The less work you have to do when performing repetitive tasks like minification, 
+compilation, unit testing, linting, etc, the easier your job becomes. 
+
+After you've configured it through a Gruntfile, 
+a task runner can do most of that mundane work for you—and your team—with basically zero effort.
+
+Before setting up Grunt ensure that your npm is up-to-date by running `npm update -g npm`
+(this might require sudo on certain systems).
+
+.Install Grunt CLI 
+
+In order to get started, you'll want to install Grunt's command line interface (CLI) globally.
+
+  npm install -g grunt-cli 
+
+.Grunt install result
+----
+C:\Users\jschust2\AppData\Roaming\npm\grunt -> C:\Users\jschust2\AppData\Roaming\npm\node_modules\grunt-cli\bin\grunt
++ grunt-cli@1.2.0
+added 16 packages in 1.619s
+----
+
+Note that installing grunt-cli does not install the Grunt task runner! 
+
+
+== BPMN Modeler code
+
+This example uses bpmn-js to implement a modeler for BPMN 2.0 process diagrams. 
+It serves as the basis of the bpmn-js demo application available at demo.bpmn.io.
+
+https://github.com/bpmn-io/bpmn-js-examples/tree/master/modeler[BPMN Modeler GitHub Page]
+
+When the code is downloaded and expanded it will have the 
+
+* Gruintfile.js - needed for building the app 
+* package.json
+
+.Install dependancies
+
+Install project dependencies with 
+
+    npm install
+
+
+
+
+
+
+== Document History
+
+.Document History
+[options="header"]
+|===
+|  Date  | Version | Author | Description
+| 02/23/2019 | v2.1b | JHRS | Initial version of the document.
+|===
