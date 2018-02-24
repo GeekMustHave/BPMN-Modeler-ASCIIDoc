@@ -234,6 +234,86 @@ Master-Examples/ <1>
 <1> Area where I put a copy of all the BPMN-JS examples for reference.
 
 
+.GIT add (Stage changes)
+   git add .
+
+.GIT commit
+  git commit -m'pristine state'
+
+.GIT Commit result
+----
+PS F:\users\jschust2\Dropbox\myDev\BPMN-modeler-asciidoc> git commit -m'pristine state'
+[master (root-commit) e082056] pristine state
+ 12 files changed, 6095 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 Gruntfile.js
+ create mode 100644 README.md
+ create mode 100644 app/css/app.css
+ create mode 100644 app/index.html
+ create mode 100644 app/index.js
+ create mode 100644 doco/readme.adoc
+ create mode 100644 doco/tmp-8624QkFeLHhn2qx2.adoc <1>
+ create mode 100644 docs/screenshot.png
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 resources/newDiagram.bpmn
+----
+<1> Temp file generated when viewing ADOC file
+
+
+.GIT Add remote repository
+
+Here’s how to add a new remote explicitly. 
+To add a new remote Git repository as a shortname you can reference easily, 
+run `git remote add <shortname> <url>`
+
+  git remote add bpmn-asciidoc https://github.com/GeekMustHave/BPMN-Modeler-ASCIIDoc
+  git remote -v2
+
+.GIT remote results
+
+----
+bpmn-asciidoc   https://github.com/GeekMustHave/BPMN-Modeler-ASCIIDoc (fetch)
+bpmn-asciidoc   https://github.com/GeekMustHave/BPMN-Modeler-ASCIIDoc (push)
+----  
+
+
+.GIT credentials
+
+The `store` mode saves the credentials to a plain-text file on disk, 
+and they never expire. 
+This means that until you change your password for the Git host, 
+you won’t ever have to type in your credentials again. 
+The downside of this approach is that your passwords are stored in cleartext in a plain file in your home directory.
+
+  git config credential.helper store
+
+.GIT push
+
+  git push -u bpmn-asciidoc master 
+
+.GIT Push results
+----
+fatal: HttpRequestException encountered.
+   An error occurred while sending the request.
+Username for 'https://github.com': geekmusthave
+Password for 'https://geekmusthave@github.com':
+Counting objects: 19, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (19/19), 215.53 KiB | 13.47 MiB/s, done.
+Total 19 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/GeekMustHave/BPMN-Modeler-ASCIIDoc
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'bpmn-asciidoc'.
+----  
+
+
+
+
+
+
 == References
 
 [[node_modules]]
